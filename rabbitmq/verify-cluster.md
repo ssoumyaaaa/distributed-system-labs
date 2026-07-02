@@ -10,18 +10,18 @@ Run on any node:
 sudo rabbitmqctl cluster_status
 
 Expected:
-All 3 nodes listed under running_nodes
-No partitioned nodes
-Same cluster name across nodes
+1.All 3 nodes listed under running_nodes
+2.No partitioned nodes
+3.Same cluster name across nodes
 
 
 ## 6.2 List All Nodes
 sudo rabbitmqctl list_nodes
 
 Expected output:
-rabbit@node1
-rabbit@node2
-rabbit@node3
+> rabbit@node1
+> rabbit@node2
+> rabbit@node3
 
 
 ## 6.3 Check Node Health
