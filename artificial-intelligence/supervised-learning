@@ -1,0 +1,108 @@
+# Supervised Learning
+
+## Overview
+
+Supervised Learning is a type of Machine Learning where the model learns from **labeled data**. Each training example contains both the input data and the correct output (label). The model uses this information to learn the relationship between inputs and outputs so it can make predictions on new data.
+
+For example, if we train a model using emails labeled as **Spam** or **Not Spam**, it can classify new emails correctly.
+
+---
+
+## Why Learn Supervised Learning?
+
+- Easy to understand and implement
+- Produces accurate predictions with quality data
+- Widely used in real-world applications
+- Supports both classification and prediction tasks
+- Forms the foundation of many Machine Learning models
+
+---
+
+## How Supervised Learning Works
+
+```text
+Labeled Data
+      │
+      ▼
+Train Model
+      │
+      ▼
+Learn Patterns
+      │
+      ▼
+Predict Output
+      │
+      ▼
+Compare with Actual Result
+```
+
+---
+
+## Types of Supervised Learning
+
+### Classification
+
+Classification predicts a category or label.
+
+Examples:
+
+- Spam or Not Spam
+- Fraud or Not Fraud
+- Disease Detected or Not Detected
+- Cat or Dog Image Classification
+
+---
+
+### Regression
+
+Regression predicts a numerical value.
+
+Examples:
+
+- House Price Prediction
+- Salary Prediction
+- Temperature Forecasting
+- Sales Prediction
+
+---
+
+## Real-World Applications
+
+- Email Spam Detection
+- Loan Approval
+- Credit Card Fraud Detection
+- Medical Diagnosis
+- Weather Prediction
+- House Price Prediction
+
+---
+
+## Hands-on Lab
+
+Create a simple Python program:
+
+```python
+print("Supervised Learning learns from labeled data.")
+```
+
+Output:
+
+```text
+Supervised Learning learns from labeled data.
+```
+
+---
+
+## Best Practices
+
+- Use clean and correctly labeled data.
+- Split data into training and testing datasets.
+- Start with simple models before advanced ones.
+- Evaluate model performance using appropriate metrics.
+- Avoid overfitting by testing with unseen data.
+
+---
+
+## Summary
+
+Supervised Learning is a Machine Learning technique where models learn from labeled data to make predictions. It is commonly used for classification and regression problems and powers many real-world applications such as spam detection, fraud detection, and price prediction.
