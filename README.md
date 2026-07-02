@@ -1,6 +1,34 @@
 # distributed-system-labs
 Learning repository for distributed systems, including GemFire, Kubernetes, RabbitMQ, VMware, Docker, and related technologies.
 
+A collection of hands-on labs and documentation for distributed systems technologies.
+
+## Technologies
+
+- Apache Geode (GemFire)
+- RabbitMQ
+- Kubernetes
+- VMware
+- Linux
+
+## Apache Geode
+
+- Introduction
+- Architecture
+- Prerequisites
+- Installation
+- Cluster Setup
+- Regions
+- GFSH Commands
+- Data Management
+- PDX Serialization
+- Function Execution
+- Continuous Query
+- Security
+- Monitoring
+- Troubleshooting
+
+> Documentation is available in the `gemfire/` directory.
 
 ## 📖 About
 
