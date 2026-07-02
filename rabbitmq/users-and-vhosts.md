@@ -2,87 +2,168 @@
 
 ## Overview
 
-RabbitMQ uses users and virtual hosts (vhosts) to control access and isolate messaging environments. Users define authentication and permissions, while vhosts provide logical separation of resources like queues, exchanges, and bindings within the same cluster.
+RabbitMQ uses **Users** and **Virtual Hosts (vhosts)** to manage authentication, authorization, and resource isolation. Users define who can access the RabbitMQ cluster, while virtual hosts provide separate environments for applications by isolating queues, exchanges, bindings, and permissions.
 
-This combination ensures secure, multi-tenant messaging in distributed systems.
-
----
-
-## Why Users and vHosts?
-
-- Secure access to RabbitMQ cluster
-- Isolate applications using vhosts
-- Support multiple environments (dev, test, prod)
-- Prevent resource conflicts
-- Apply role-based access control
+This allows multiple applications to share the same RabbitMQ cluster securely.
 
 ---
 
-## Default Setup
+## Why Use Users and Virtual Hosts?
 
-RabbitMQ provides a default user:
+- Secure access to the RabbitMQ cluster
+- Isolate applications within the same cluster
+- Support multiple environments (Development, Testing, Production)
+- Control user permissions
+- Simplify multi-tenant deployments
+
+---
+
+## Default Configuration
+
+RabbitMQ creates the following by default:
+
+**Default User**
 
 ```text
-username: guest
-password: guest
+Username: guest
+Password: guest
+```
 
-Note:
+**Default Virtual Host**
 
-Works only on localhost
-Not recommended for cluster or remote access
-
-Default virtual host:
-
+```text
 /
-User and Virtual Host Configuration
+```
 
-Create an admin user, assign administrator role, and set permissions:
+> **Note:** The `guest` user is restricted to localhost access and should not be used in production environments.
 
+---
+
+## User and Virtual Host Management
+
+### Create a User
+
+```bash
 sudo rabbitmqctl add_user admin admin123
+```
+
+### Assign Administrator Role
+
+```bash
 sudo rabbitmqctl set_user_tags admin administrator
-sudo rabbitmqctl set_permissions -p / admin ".*" ".*" ".*"
+```
 
-Create a virtual host and assign permissions:
+### Create a Virtual Host
 
+```bash
 sudo rabbitmqctl add_vhost dev_vhost
+```
+
+### Grant Permissions
+
+Grant full permissions on the default virtual host:
+
+```bash
+sudo rabbitmqctl set_permissions -p / admin ".*" ".*" ".*"
+```
+
+Grant full permissions on the new virtual host:
+
+```bash
 sudo rabbitmqctl set_permissions -p dev_vhost admin ".*" ".*" ".*"
-Verification
+```
 
-List users and virtual hosts:
+### Verify Configuration
 
+List users:
+
+```bash
 sudo rabbitmqctl list_users
+```
+
+List virtual hosts:
+
+```bash
 sudo rabbitmqctl list_vhosts
+```
 
-Check permissions:
+List user permissions:
 
+```bash
 sudo rabbitmqctl list_user_permissions admin
-sudo rabbitmqctl list_permissions -p dev_vhost
-Access Management UI
+```
 
-Open in browser:
+---
 
-http://<node-ip>:15672
+## How It Works
 
-Login:
+```text
+                RabbitMQ Cluster
+                       │
+        ┌──────────────┴──────────────┐
+        ▼                             ▼
+     User (admin)                User (application)
+        │                             │
+        ▼                             ▼
+  Administrator Role          Application Role
+        │                             │
+        └──────────────┬──────────────┘
+                       ▼
+              Virtual Host (vhost)
+                       │
+         ┌─────────────┴─────────────┐
+         ▼                           ▼
+     Exchanges                    Queues
+                       │
+                       ▼
+                    Messages
+```
 
-username: admin
-password: admin123
-How It Works
-User (admin)
-   │
-   ▼
-Virtual Host (dev_vhost)
-   │
-   ▼
-Exchanges → Queues → Bindings
-   │
-   ▼
-Message Flow
-Hands-on Summary
+---
+
+## Hands-on Lab
+
+Create an administrator user:
+
+```bash
 sudo rabbitmqctl add_user admin admin123
 sudo rabbitmqctl set_user_tags admin administrator
+```
+
+Create a virtual host:
+
+```bash
 sudo rabbitmqctl add_vhost dev_vhost
-sudo rabbitmqctl set_permissions -p / admin ".*" ".*" ".*"
+```
+
+Assign permissions:
+
+```bash
 sudo rabbitmqctl set_permissions -p dev_vhost admin ".*" ".*" ".*"
+```
+
+Verify the configuration:
+
+```bash
 sudo rabbitmqctl list_users
 sudo rabbitmqctl list_vhosts
+sudo rabbitmqctl list_user_permissions admin
+```
+
+Log in to the Management UI using the newly created administrator account and verify that the `dev_vhost` is available.
+
+---
+
+## Best Practices
+
+- Create dedicated users for each application.
+- Use separate virtual hosts for development, testing, and production.
+- Follow the principle of least privilege when assigning permissions.
+- Avoid using the default `guest` user in production.
+- Regularly review users and permissions.
+
+---
+
+## Summary
+
+Users and Virtual Hosts provide security and isolation in RabbitMQ. Users control authentication and authorization, while virtual hosts logically separate application resources within the same cluster, enabling secure and organized messaging for multiple applications.
