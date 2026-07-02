@@ -10,9 +10,9 @@ Run on any node:
 sudo rabbitmqctl cluster_status
 
 Expected:
-1.All 3 nodes listed under running_nodes
-2.No partitioned nodes
-3.Same cluster name across nodes
+> All 3 nodes listed under running_nodes
+> No partitioned nodes
+> Same cluster name across nodes
 
 
 ## 6.2 List All Nodes
@@ -26,10 +26,11 @@ Expected output:
 
 ## 6.3 Check Node Health
 sudo rabbitmqctl status
+
 Verify:
-RabbitMQ application is running
-Erlang runtime is active
-No errors in logs
+> RabbitMQ application is running
+> Erlang runtime is active
+> No errors in logs
 
 
 ## 6.4 Check Cluster Membership from Each Node
