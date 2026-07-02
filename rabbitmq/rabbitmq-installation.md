@@ -9,7 +9,8 @@ Run on all nodes:
 ```bash
 sudo dnf update -y
 sudo dnf install -y curl wget socat logrotate
-4.2 Install Erlang
+
+## 4.2 Install Erlang
 sudo dnf install -y erlang
 
 Verify:
