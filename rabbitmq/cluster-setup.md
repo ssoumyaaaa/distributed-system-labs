@@ -1,43 +1,149 @@
-# 5. Cluster Setup
+# Cluster Setup
 
-This section explains how to form a 3-node RabbitMQ cluster.
+## Overview
 
-## 5.1 Start RabbitMQ on All Nodes
+RabbitMQ clustering allows multiple RabbitMQ nodes to work together as a single logical broker. Clustering improves scalability, availability, and fault tolerance by enabling applications to connect to any node in the cluster.
 
-Run on all nodes:
+In this lab, a three-node RabbitMQ cluster is created with one seed node and two cluster members.
 
-``bash
+---
+
+## Why Use Clustering?
+
+- Increase availability of the messaging system
+- Improve fault tolerance
+- Scale RabbitMQ across multiple nodes
+- Share users, virtual hosts, exchanges, and bindings
+- Simplify administration
+
+> **Note:** Queue contents are **not automatically replicated** across cluster nodes. For high availability, RabbitMQ recommends using **Quorum Queues**, which are covered later.
+
+---
+
+## Cluster Topology
+
+```text
+                RabbitMQ Cluster
+          ┌──────────┬──────────┐
+          │          │          │
+          ▼          ▼          ▼
+      rabbit@node1 rabbit@node2 rabbit@node3
+      (Seed Node)   (Member)     (Member)
+```
+
+---
+
+## Cluster Setup
+
+Ensure RabbitMQ is installed and running on all nodes.
+
+Start the RabbitMQ service:
+
+```bash
 sudo systemctl enable rabbitmq-server
 sudo systemctl start rabbitmq-server
+```
 
-Check status:
+Verify the service:
+
+```bash
 sudo systemctl status rabbitmq-server
+```
 
-## 5.2 Stop RabbitMQ App (All Nodes Except Node1)
+On **Node2** and **Node3**, stop the RabbitMQ application:
 
-On Node2 and Node3:
+```bash
 sudo rabbitmqctl stop_app
+```
 
+Reset the node before joining the cluster:
 
-## 5.3 Reset Node2 and Node3
-
-Run on Node2 and Node3:
+```bash
 sudo rabbitmqctl reset
+```
 
+Join the cluster using **Node1** as the seed node:
 
-## 5.4 Join Cluster (Node2 and Node3)
-
-On Node2:
+```bash
 sudo rabbitmqctl join_cluster rabbit@node1
+```
 
-On Node3:
-sudo rabbitmqctl join_cluster rabbit@node1
+Start the RabbitMQ application:
 
-
-## 5.5 Start App on Node2 and Node3
+```bash
 sudo rabbitmqctl start_app
+```
 
+---
 
-## 5.6 Verify Cluster Status
-Run on any node:
+## Cluster Workflow
+
+```text
+Start RabbitMQ
+       │
+       ▼
+Stop App (Node2 & Node3)
+       │
+       ▼
+Reset Nodes
+       │
+       ▼
+Join Cluster
+       │
+       ▼
+Start App
+       │
+       ▼
+Verify Cluster
+```
+
+---
+
+## Hands-on Lab
+
+On all nodes:
+
+```bash
+sudo systemctl start rabbitmq-server
+```
+
+On **Node2**:
+
+```bash
+sudo rabbitmqctl stop_app
+sudo rabbitmqctl reset
+sudo rabbitmqctl join_cluster rabbit@node1
+sudo rabbitmqctl start_app
+```
+
+On **Node3**:
+
+```bash
+sudo rabbitmqctl stop_app
+sudo rabbitmqctl reset
+sudo rabbitmqctl join_cluster rabbit@node1
+sudo rabbitmqctl start_app
+```
+
+Verify the cluster:
+
+```bash
 sudo rabbitmqctl cluster_status
+sudo rabbitmqctl list_nodes
+```
+
+---
+
+## Best Practices
+
+- Use an odd number of cluster nodes (3 or 5).
+- Ensure all nodes use the same Erlang cookie.
+- Configure hostname resolution before clustering.
+- Verify network connectivity between all nodes.
+- Use Quorum Queues for high availability.
+
+---
+
+## Summary
+
+RabbitMQ clustering combines multiple nodes into a single logical messaging broker, improving scalability and resilience. After joining the nodes and verifying the cluster status, the environment is ready for user configuration, messaging, and high availability features.
