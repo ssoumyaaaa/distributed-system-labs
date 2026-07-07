@@ -72,9 +72,3 @@ By the end of this module, you will be able to:
 - Terminal access with appropriate permissions
 
 ---
-
-## 🚀 Next Step
-
-Start with **`server-health-check.md`** to learn how to verify the health of a Linux server before investigating application issues.
-
-Happy Learning! 🚀
